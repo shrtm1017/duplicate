@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="file">
+	<select id="getAllbulletin" resultType="bulletinVo">
+		select * from bulletin
+		<!-- where userId = jdbc 표현 #{userId} -->
+		<!-- 특정 사용자 조회(userId) selectUser(String userId) query,dao(test),service(test) -->
+	</select>
+	<select id="selectbulletin" resultType="bulletinVo" >
+		select  /*+ INDEX(bulletin pk_bulletin_no)*/ * from bulletin where board_no=#{board_no,jdbcType=VARCHAR}
+</select>
+<select id="bulletinDetail" resultType="bulletinVo" >
+		select * from bulletin where bulletin_no=#{bulletin_no,jdbcType=VARCHAR}
+</select>
+
+		<!-- 사용자 페이징 조회 -->
+<!--   <select id="selectUserPagingList" resultType="userVo" parameterType="pageVo"> -->
+<!--      select * -->
+<!--    from  -->
+<!--        ( select a.*, rownum rn -->
+<!--        from -->
+<!--            (select users.* -->
+<!--            from users -->
+<!--            order by userid) a ) a -->
+<!--    where rn between (#{page}-1) * #{pageSize}+1 and #{page} * #{pageSize} -->
+<!--   </select> -->
+  
+  <!-- 전체 사용자 수 조회 -->
+  
+ <select id="getUserCnt" resultType="integer">
+  	select count(*)
+  	from users
+  
+  </select>
+	<!-- 사용자 입력 -->
+<insert id="insertboardFile" parameterType="fileVo">
+		insert into board_file (file_no,bulletin_no,file_title,file_path) 
+		values	
+		(file_seq.nextval,
+		#{bulletin_no,jdbcType=VARCHAR},
+		#{file_title,jdbcType=VARCHAR},
+		#{file_path,jdbcType=VARCHAR})
+	</insert>
+</mapper>
