@@ -2,34 +2,30 @@ package practice.user.service;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
+import javax.annotation.Resource;
 
-import practice.db.mybatis.MybatisSqlSessionFactoy;
+import org.springframework.stereotype.Service;
+
+import ch.qos.logback.classic.Logger;
 import practice.user.dao.IUserDao;
-import practice.user.dao.UserDaoImpl;
 import practice.user.model.UserVo;
 
-
+@Service("userService")
 public class UserServiceImpl implements IUserService {
+	@Resource(name="userDao")
 	private IUserDao userDao;
+	
 	public UserServiceImpl(){
-		userDao = new UserDaoImpl();
+		
 }
 	@Override
 	public List<UserVo> userGetAll() {
-		SqlSessionFactory sessionFactory = MybatisSqlSessionFactoy.getSqlSessionFactory();
-		SqlSession sqlSession = sessionFactory.openSession();
-		List<UserVo> userList = userDao.userGetAll(sqlSession);
-		sqlSession.close();
+		List<UserVo> userList = userDao.userGetAll();
 		return userList;
 	}
 	@Override
 	public UserVo selectUser(String userId) {
-		SqlSessionFactory sessionFactory = MybatisSqlSessionFactoy.getSqlSessionFactory();
-		SqlSession sqlSession = sessionFactory.openSession();
-		UserVo user= userDao.selectUser(sqlSession, userId);
-		sqlSession.close();
+		UserVo user= userDao.selectUser(userId);
 		return user;
 	}
 }

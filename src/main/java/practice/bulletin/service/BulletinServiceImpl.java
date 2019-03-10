@@ -1,98 +1,81 @@
 package practice.bulletin.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
+import javax.annotation.Resource;
 
-import practice.bulletin.dao.BulletinDaoImpl;
+import org.springframework.stereotype.Service;
+
 import practice.bulletin.dao.IBulletinDao;
 import practice.bulletin.model.bulletinVo;
-import practice.db.mybatis.MybatisSqlSessionFactoy;
-
+import practice.util.model.pageVo;
+@Service("bulletinService")
 public class BulletinServiceImpl implements IBulletinSerivce{
+	@Resource(name="bulletinDao")
 	private IBulletinDao BulletinDao;
 	public BulletinServiceImpl(){
-		BulletinDao = new BulletinDaoImpl();
 }
 
 	@Override
 	public int insertBulletin(bulletinVo vo) {
-		SqlSessionFactory sessionFactory = MybatisSqlSessionFactoy.getSqlSessionFactory();
-		SqlSession sqlSession = sessionFactory.openSession();
-		int bulletinVo= BulletinDao.insertBulletin(sqlSession, vo);
-		sqlSession.commit();
-		sqlSession.close();
+		int bulletinVo= BulletinDao.insertBulletin( vo);
 		return bulletinVo;
 
 	}
 
 	@Override
-	public List<bulletinVo> BulletinList() {
-		SqlSessionFactory sessionFactory = MybatisSqlSessionFactoy.getSqlSessionFactory();
-		SqlSession sqlSession = sessionFactory.openSession();
-		List<bulletinVo> BulletinList= BulletinDao.BulletinGetAll(sqlSession);
-		sqlSession.close();
-		return BulletinList;
-	}
-
-	@Override
 	public int deleteBulletin(bulletinVo Bulletin_title) {
-		SqlSessionFactory sessionFactory = MybatisSqlSessionFactoy.getSqlSessionFactory();
-		SqlSession sqlSession = sessionFactory.openSession();
-		int deleteBulletin= BulletinDao.deleteBulletin(sqlSession, Bulletin_title);
-		sqlSession.commit();
-		sqlSession.close();
+		int deleteBulletin= BulletinDao.deleteBulletin( Bulletin_title);		
 		return deleteBulletin;
 	}
 
 
 	@Override
 	public int updateBulletin(bulletinVo Bulletin_title) {
-		SqlSessionFactory sessionFactory = MybatisSqlSessionFactoy.getSqlSessionFactory();
-		SqlSession sqlSession = sessionFactory.openSession();
-		int updateBulletin= BulletinDao.updateBulletin(sqlSession, Bulletin_title);
-		sqlSession.commit();
-		sqlSession.close();
+		int updateBulletin= BulletinDao.updateBulletin(Bulletin_title);
 		return updateBulletin;
 	}
 
 	@Override
 	public bulletinVo selectBulletin(String selectBulletin) {
-		SqlSessionFactory sessionFactory = MybatisSqlSessionFactoy.getSqlSessionFactory();
-		SqlSession sqlSession = sessionFactory.openSession();
-		bulletinVo Bulletin= BulletinDao.selectBulletin(sqlSession, selectBulletin);
-		sqlSession.close();
+		bulletinVo Bulletin= BulletinDao.selectBulletin(selectBulletin);
 		return Bulletin;
 	}
 
 	@Override
 	public List<bulletinVo> BulletinSelectList(String selectBulletin) {
-		SqlSessionFactory sessionFactory = MybatisSqlSessionFactoy.getSqlSessionFactory();
-		SqlSession sqlSession = sessionFactory.openSession();
-		List<bulletinVo> Bulletin= BulletinDao.bulletinSelectAll(sqlSession, selectBulletin);
-		sqlSession.close();
+		List<bulletinVo> Bulletin= BulletinDao.bulletinSelectAll(selectBulletin);
 		return Bulletin;
 	}
 
 	@Override
 	public List<bulletinVo> bulletinReply(String selectBulletin) {
-		SqlSessionFactory sessionFactory = MybatisSqlSessionFactoy.getSqlSessionFactory();
-		SqlSession sqlSession = sessionFactory.openSession();
-		List<bulletinVo> bulletinReply= BulletinDao.bulletinReply(sqlSession, selectBulletin);
-		sqlSession.close();
+		List<bulletinVo> bulletinReply= BulletinDao.bulletinReply(selectBulletin);
 
 		return bulletinReply;
 	}
 
 	@Override
 	public int updateLevel(bulletinVo Bulletintitle) {
-		SqlSessionFactory sessionFactory = MybatisSqlSessionFactoy.getSqlSessionFactory();
-		SqlSession sqlSession = sessionFactory.openSession();
-		int updateLevel= BulletinDao.updateLevel(sqlSession, Bulletintitle);
-		sqlSession.commit();
-		sqlSession.close();
+		int updateLevel= BulletinDao.updateLevel(Bulletintitle);
 		return updateLevel;
+	}
+
+	@Override
+	public Map<String,Object> BulletinPagingList(pageVo pageVo) {
+		Map<String,Object> resultMap =new HashMap<String, Object>();
+		resultMap.put("bulletinList", BulletinDao.BulletinPagingList(pageVo));
+		resultMap.put("bulletinCnt", BulletinDao.bulletinCnt());
+		
+		return resultMap;
+	}
+
+	@Override
+	public int bulletinCnt() {
+		int bulletinCnt= BulletinDao.bulletinCnt();
+		return bulletinCnt;
 	}
 
 }

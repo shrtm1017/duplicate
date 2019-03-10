@@ -3,13 +3,15 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<properties resource="kr/or/ddit/config/db/db.properties"/>
+	<properties resource="config/db/db.properties"/>
 	
 	<typeAliases>
 		<typeAlias alias="userVo" type="practice.user.model.UserVo"/>
+		<typeAlias alias="boardVo" type="practice.board.model.boardVo"/>
+		<typeAlias alias="bulletinVo" type="practice.bulletin.model.bulletinVo"/>
+		<typeAlias alias="fileVo" type="practice.file.model.fileVo"/>
+		<typeAlias alias="commentVo" type="practice.comment.model.commentVo"/>
 		<typeAlias alias="pageVo" type="practice.util.model.pageVo"/>
-		<typeAlias alias="LprodVo" type="practice.lprod.model.LprodVo"/>
-		<typeAlias alias="ProdVo" type="practice.prod.model.ProdVo"/>
 	
 	</typeAliases>
   <environments default="development">
@@ -25,7 +27,9 @@
   </environments>
   <mappers>
     <mapper resource="config/db/mapper/user.xml"/>
-    <mapper resource="config/db/mapper/lprod.xml"/>
-    <mapper resource="config/db/mapper//prod.xml"/>
+    <mapper resource="config/db/mapper/board.xml"/>
+    <mapper resource="config/db/mapper/bulletin.xml"/>
+    <mapper resource="config/db/mapper/file.xml"/>
+    <mapper resource="config/db/mapper/comment.xml"/>
   </mappers>
 </configuration>

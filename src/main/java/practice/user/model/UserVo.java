@@ -63,9 +63,11 @@ public class UserVo {
 
 	@Override
 	public String toString() {
-		return "UserVo [mem_id=" + mem_id + ", mem_pass=" + mem_pass
-				+ ", mem_name=" + mem_name + ", reg_dt=" + reg_dt + "]";
+		return "UserVo [mem_id=" + mem_id + ", mem_pass=" + mem_pass + ", mem_name=" + mem_name + ", file_title="
+				+ file_title + ", file_path=" + file_path + ", reg_dt=" + reg_dt + "]";
 	}
+
+
 
 	
 	

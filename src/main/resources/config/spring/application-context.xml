@@ -20,7 +20,7 @@
 <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
       <property name="basenames">
          <list>
-            <value>classpath:kr/or/ddit/config/msg/error</value>
+            <value>classpath:config/msg/error</value>
          </list>
       </property>
    </bean>

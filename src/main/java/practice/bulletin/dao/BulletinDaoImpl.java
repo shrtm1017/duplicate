@@ -2,59 +2,71 @@ package practice.bulletin.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
+import javax.annotation.Resource;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Repository;
 
 import practice.bulletin.model.bulletinVo;
+import practice.util.model.pageVo;
+@Repository("bulletinDao")
+public class BulletinDaoImpl implements IBulletinDao {
 
-public class BulletinDaoImpl implements IBulletinDao{
-
+	@Resource(name="sqlSessionTemplate")
+	private SqlSessionTemplate sqlSessionTemplate;
+	
 	@Override
-	public int insertBulletin(SqlSession openSession, bulletinVo vo) {
-		int insertBulletin = openSession.insert("bulletin.insertbulletin", vo );
+	public int insertBulletin( bulletinVo vo) {
+		int insertBulletin = sqlSessionTemplate.insert("bulletin.insertbulletin", vo);
 		return insertBulletin;
 	}
 
 	@Override
-	public List<bulletinVo> BulletinGetAll(SqlSession openSession) {
-		List<bulletinVo> BulletinList = openSession.selectList("bulletin.getAllbulletin");
+	public List<bulletinVo> BulletinPagingList(pageVo pagevo) {
+		List<bulletinVo> BulletinList =sqlSessionTemplate.selectList("bulletin.bulletinPagingList",pagevo);
 		return BulletinList;
 	}
 
 	@Override
-	public int deleteBulletin(SqlSession openSession, bulletinVo Bulletintitle) {
-		int deleteBulletin = openSession.delete("bulletin.deleteBulletin", Bulletintitle );
+	public int deleteBulletin( bulletinVo Bulletintitle) {
+		int deleteBulletin = sqlSessionTemplate.delete("bulletin.deleteBulletin", Bulletintitle);
 		return deleteBulletin;
 	}
 
 	@Override
-	public int updateBulletin(SqlSession openSession, bulletinVo Bulletintitle) {
-		int updateBulletin= openSession.update("bulletin.updateBulletin", Bulletintitle );
+	public int updateBulletin( bulletinVo Bulletintitle) {
+		int updateBulletin = sqlSessionTemplate.update("bulletin.updateBulletin", Bulletintitle);
 		return updateBulletin;
 	}
 
 	@Override
-	public bulletinVo selectBulletin(SqlSession openSession, String selectBulletin) {
-		bulletinVo selectBulletinList = openSession.selectOne("bulletin.bulletinDetail", selectBulletin);
-		return selectBulletinList ;
+	public bulletinVo selectBulletin( String selectBulletin) {
+		bulletinVo selectBulletinList = sqlSessionTemplate.selectOne("bulletin.bulletinDetail", selectBulletin);
+		return selectBulletinList;
 	}
 
 	@Override
-	public List<bulletinVo> bulletinSelectAll(SqlSession openSession,String selectAll) {
-		List<bulletinVo> selectBulletinList = openSession.selectList("bulletin.selectbulletin",selectAll);
-		return selectBulletinList ;
+	public List<bulletinVo> bulletinSelectAll( String selectAll) {
+		List<bulletinVo> selectBulletinList = sqlSessionTemplate.selectList("bulletin.selectbulletin", selectAll);
+		return selectBulletinList;
 	}
 
 	@Override
-	public List<bulletinVo> bulletinReply(SqlSession openSession,
-			String selectBulletin) {
-		List<bulletinVo> bulletinReply = openSession.selectList("bulletin.bulletinRedirect",selectBulletin);
-		return bulletinReply ;
+	public List<bulletinVo> bulletinReply( String selectBulletin) {
+		List<bulletinVo> bulletinReply = sqlSessionTemplate.selectList("bulletin.bulletinRedirect", selectBulletin);
+		return bulletinReply;
 	}
 
 	@Override
-	public int updateLevel(SqlSession openSession, bulletinVo Bulletintitle) {
-		int updateLevel= openSession.update("bulletin.updateLevel", Bulletintitle );
+	public int updateLevel( bulletinVo Bulletintitle) {
+		int updateLevel = sqlSessionTemplate.update("bulletin.updateLevel", Bulletintitle);
 		return updateLevel;
+	}
+
+	@Override
+	public int bulletinCnt() {
+		int bulletinCnt = sqlSessionTemplate.selectOne("bulletin.bulletinCnt");
+		return bulletinCnt;
 	}
 
 }
