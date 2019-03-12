@@ -10,7 +10,7 @@ public interface IBulletinDao {
 	List<bulletinVo> BulletinPagingList(pageVo pagevo);
 	int bulletinCnt ();
 	List<bulletinVo> bulletinSelectAll(String selectBulletin);
-	List<bulletinVo> bulletinReply(String selectBulletin);
+	List<bulletinVo> bulletinReply(pageVo pagevo);
 	int deleteBulletin (bulletinVo Bulletintitle);
 	int	updateBulletin(bulletinVo Bulletintitle);
 	int	updateLevel(bulletinVo Bulletintitle);

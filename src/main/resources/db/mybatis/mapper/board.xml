@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="board">
+	<select id="getallBoard" resultType="boardVo">
+		select * from board
+		<!-- where userId = jdbc 표현 #{userId} -->
+		<!-- 특정 사용자 조회(userId) selectUser(String userId) query,dao(test),service(test) -->
+	</select>
+	<select id="selectBoard" resultType="boardVo">
+		select * from board where  board_no = ${board_no}
+	</select>
+	<insert id="insertBoard" parameterType="boardVo">
+		insert into board (board_no,board_title,board_check) 
+		values	(board_seq.nextval,#{board_title,jdbcType=VARCHAR},
+		#{board_check,jdbcType=VARCHAR})
+	</insert>
+	<delete id="deleteBoard" parameterType="String">
+	delete from board where board_check=#{board_check} and board_title=#{board_title}
+	</delete>
+	<update id="updateBoard" parameterType="boardVo">
+	update board set  
+		board_title=#{board_title},
+		board_check=#{board_check}
+		
+		where board_no=#{board_no}
+	</update>
+	</mapper>

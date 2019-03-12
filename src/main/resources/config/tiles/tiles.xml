@@ -20,6 +20,23 @@
         	<put-attribute name="content" value="/WEB-INF/views/board/freeboard.jsp"/>
         </definition>
         
+		<definition name="createBulletin" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/bulletin/createBulletin.jsp"/>
+        </definition>
         
+        <definition name="detailBulletin" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/bulletin/detailBulletin.jsp"/>
+        </definition>
+        
+         <definition name="updateBulletin" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/bulletin/updateBulletin.jsp"/>
+        </definition>
+         <definition name="replyBulletin" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/bulletin/replyBulletin.jsp"/>
+        </definition>
+        
+        <definition name="commentView" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/bulletin/detailBulletin.jsp"/>
+        </definition>
         
 </tiles-definitions>

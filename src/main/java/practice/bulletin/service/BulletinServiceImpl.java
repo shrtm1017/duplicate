@@ -51,10 +51,11 @@ public class BulletinServiceImpl implements IBulletinSerivce{
 	}
 
 	@Override
-	public List<bulletinVo> bulletinReply(String selectBulletin) {
-		List<bulletinVo> bulletinReply= BulletinDao.bulletinReply(selectBulletin);
-
-		return bulletinReply;
+	public Map<String,Object> bulletinReply(pageVo pagevo) {
+		Map<String,Object> resultMap =new HashMap<String, Object>();
+		resultMap.put("bulletinList", BulletinDao.bulletinReply(pagevo));
+		resultMap.put("bulletinCnt", BulletinDao.bulletinCnt());
+		return resultMap;
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public class BulletinServiceImpl implements IBulletinSerivce{
 	@Override
 	public Map<String,Object> BulletinPagingList(pageVo pageVo) {
 		Map<String,Object> resultMap =new HashMap<String, Object>();
-		resultMap.put("bulletinList", BulletinDao.BulletinPagingList(pageVo));
+		resultMap.put("bulletinList", BulletinDao.bulletinReply(pageVo));
 		resultMap.put("bulletinCnt", BulletinDao.bulletinCnt());
 		
 		return resultMap;

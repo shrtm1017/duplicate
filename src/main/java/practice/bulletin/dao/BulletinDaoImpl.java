@@ -52,8 +52,8 @@ public class BulletinDaoImpl implements IBulletinDao {
 	}
 
 	@Override
-	public List<bulletinVo> bulletinReply( String selectBulletin) {
-		List<bulletinVo> bulletinReply = sqlSessionTemplate.selectList("bulletin.bulletinRedirect", selectBulletin);
+	public List<bulletinVo> bulletinReply(pageVo pagevo) {
+		List<bulletinVo> bulletinReply = sqlSessionTemplate.selectList("bulletin.bulletinRedirect",pagevo);
 		return bulletinReply;
 	}
 

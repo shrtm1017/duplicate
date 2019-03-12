@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment">
+	<select id="getAllcomment" resultType="commentVo" parameterType="String">
+		select * from cmt where board_no=#{board_no} 
+		<!-- where userId = jdbc 표현 #{userId} -->
+		<!-- 특정 사용자 조회(userId) selectUser(String userId) query,dao(test),service(test) -->
+	</select>
+	<select id="selectcomment" resultType="commentVo" >
+		select  /*+ INDEX(cmt pk_cmt_no)*/ * from cmt where cmt_no=#{cmt_no,jdbcType=VARCHAR}
+</select>
+<select id="commentDetail" resultType="commentVo" >
+		select * from cmt where cmt_no=#{cmt_no,jdbcType=VARCHAR}
+</select>
+
+		<!-- 사용자 페이징 조회 -->
+<!--   <select id="selectUserPagingList" resultType="userVo" parameterType="pageVo"> -->
+<!--      select * -->
+<!--    from  -->
+<!--        ( select a.*, rownum rn -->
+<!--        from -->
+<!--            (select users.* -->
+<!--            from users -->
+<!--            order by userid) a ) a -->
+<!--    where rn between (#{page}-1) * #{pageSize}+1 and #{page} * #{pageSize} -->
+<!--   </select> -->
+  
+  <!-- 전체 사용자 수 조회 -->
+
+ <select id="getUserCnt" resultType="integer">
+  	select count(*)
+  	from users
+  
+  </select>
+	<!-- 사용자 입력 -->
+<insert id="insertcmt" parameterType="commentVo">
+  <selectKey keyProperty="cmt_no" resultType="String" order="BEFORE">
+         select cmt_seq.nextval from dual
+    </selectKey>
+		insert into cmt (cmt_no,board_no,cmt_content,reg_dt,cmt_del_check,mem_id) 
+		values	
+		(#{cmt_no,jdbcType=VARCHAR},
+		#{board_no,jdbcType=VARCHAR},
+		#{cmt_content,jdbcType=VARCHAR},
+		sysdate,
+		#{cmt_del_check,jdbcType=VARCHAR},
+		#{mem_id,jdbcType=VARCHAR})
+	</insert>
+	
+<!-- 		<update id="deleteBulletin" parameterType="bulletinVo"> -->
+<!-- 		update bulletin set  -->
+<!-- 		bulletin_no=nvl(#{bulletin_no,jdbcType=VARCHAR}, bulletin_no), -->
+<!-- 		board_no=nvl(#{board_no,jdbcType=VARCHAR},board_no), -->
+<!-- 		mem_id=nvl(#{mem_id,jdbcType=VARCHAR},mem_id), -->
+<!-- 		bulletin_title=nvl(#{bulletin_title,jdbcType=VARCHAR},bulletin_title), -->
+<!-- 		bulletin_content=nvl(#{bulletin_content,jdbcType=VARCHAR},bulletin_content), -->
+<!-- 		bulletin_del_check=#{bulletin_del_check,jdbcType=VARCHAR}, -->
+<!-- 		bulletin_no2=nvl(#{bulletin_no2,jdbcType=VARCHAR},bulletin_no2), -->
+<!-- 		group_no=nvl(#{group_no,jdbcType=VARCHAR},group_no) -->
+		
+<!-- 		where mem_id=#{mem_id} and bulletin_no=#{bulletin_no} -->
+	
+<!-- 	</update> -->
+		<update id="updateComment" parameterType="commentVo">
+		update cmt 
+		set 
+		cmt_no=#{cmt_no},
+		board_no=#{board_no},
+		cmt_content=nvl(#{cmt_content,jdbcType=VARCHAR},cmt_content),
+		cmt_del_check=nvl(#{cmt_del_check,jdbcType=VARCHAR},cmt_del_check),
+		mem_id=nvl(#{mem_id,jdbcType=VARCHAR},mem_id)
+		
+		
+		where mem_id=#{mem_id} and cmt_no=#{cmt_no}
+	
+	</update>
+</mapper>

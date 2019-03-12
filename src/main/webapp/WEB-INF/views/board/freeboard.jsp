@@ -27,9 +27,10 @@
 			<tbody id="freeboardListTbody">
 			</tbody>
 		</table>
-		<%--                <form action="${pageContext. }/user/userForm" method="get"> --%>
-		<!--                <button type="submit" class="btn btn-default">사용자 등록</button> -->
-		<!--                </form> -->
+		               <form action="${pageContext.request.contextPath}/bulletin/createBulletin" method="get">
+		               <button type="submit" class="btn btn-default">게시글 등록하기</button>
+		               <input type="hidden" name="board_no" value="${boardVo.board_no}"/>
+		               </form>
 		<c:set var="lastPage" value="${Integer( bullentinCnt / pageSize + (bullentinCnt % pageSize > 0 ? 1 : 0))}" />
 		
 		<nav style="text-align: center;">
@@ -59,7 +60,7 @@ $("#regBtn").click(function() {
  		  data : "page="+page,
  		  success : function(data) {
  			var htmlArr= data.split("==============seperator===================");
- 			$("#freeboardListTbody").html(data);
+ 			$("#freeboardListTbody").html(htmlArr[0]);
  			$("#pagenation").html(htmlArr[1]);
 	
 
@@ -81,9 +82,9 @@ $(document).ready(function() {
 	});
 });
 </script>
-	<%--   <form id="frm" action="${request.getContextPath()}/bulletin/user" method="get"> --%>
-	<!--       <input type="hidden" id="userId" name="userId" /> -->
-	<!--    </form> -->
+	  <form id="frm" action="${request.getContextPath()}/bulletin/detailBulletin" method="get">
+	      <input type="hidden" id="bulletin_no" name="bulletin_no"/>
+	   </form>
 
 </body>
 </html>

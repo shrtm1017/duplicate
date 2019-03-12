@@ -15,14 +15,27 @@
 		select * from bulletin where bulletin_no=#{bulletin_no,jdbcType=VARCHAR}
 </select>
 
-<select id="bulletinRedirect" resultType="bulletinVo" parameterType="String">
+<select id="bulletinRedirect" resultType="bulletinVo" parameterType="pageVo">
 select bulletin_no,bulletin_no2, lpad(' ', 5*(level-1)) || bulletin_title as bulletin_title,
        level as group_no, mem_id, reg_dt,bulletin_del_check
+       from(select *
+            from(select a.*, rownum rn
+                 from(select bulletin.*
   from bulletin
- where board_no=#{board_no }
+order by bulletin_no desc) a )a
+
+where rn between (#{page}-1) * #{pageSize}+1 and #{page} * #{pageSize})
+where board_no=#{board_no}
+
+
 start with bulletin_no2 is null
 connect by prior bulletin_no = bulletin_no2
+order siblings  by bulletin_no desc
 </select>
+
+
+
+
 
 		<!-- 사용자 페이징 조회 -->
   <select id="bulletinPagingList" resultType="bulletinVo" parameterType="pageVo">

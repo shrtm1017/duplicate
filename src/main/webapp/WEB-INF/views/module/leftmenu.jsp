@@ -10,6 +10,7 @@
 	<c:if test="${list.board_check == '사용'}">
 		<ul class="nav nav-sidebar">
 			<li><a href="<%=request.getContextPath()%>/bulletin/freeboardView?board_no=${list.board_no} ">${list.board_title}
+<%-- 			<li><a href="<%=request.getContextPath()%>/bulletin/freeboard?board_no=${list.board_no} ">${list.board_title} --%>
 			</a></li>
 		</ul>
 	</c:if>

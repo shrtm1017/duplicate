@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="comment">
 	<select id="getAllcomment" resultType="commentVo" parameterType="String">
-		select * from cmt where board_no=#{board_no} 
+		select * from cmt where bulletin_no=#{bulletin_no} 
 		<!-- where userId = jdbc 표현 #{userId} -->
 		<!-- 특정 사용자 조회(userId) selectUser(String userId) query,dao(test),service(test) -->
 	</select>
@@ -39,10 +39,10 @@
   <selectKey keyProperty="cmt_no" resultType="String" order="BEFORE">
          select cmt_seq.nextval from dual
     </selectKey>
-		insert into cmt (cmt_no,board_no,cmt_content,reg_dt,cmt_del_check,mem_id) 
+		insert into cmt (cmt_no,bulletin_no,cmt_content,reg_dt,cmt_del_check,mem_id) 
 		values	
 		(#{cmt_no,jdbcType=VARCHAR},
-		#{board_no,jdbcType=VARCHAR},
+		#{bulletin_no,jdbcType=VARCHAR},
 		#{cmt_content,jdbcType=VARCHAR},
 		sysdate,
 		#{cmt_del_check,jdbcType=VARCHAR},
@@ -67,7 +67,7 @@
 		update cmt 
 		set 
 		cmt_no=#{cmt_no},
-		board_no=#{board_no},
+		bulletin_no=#{bulletin_no},
 		cmt_content=nvl(#{cmt_content,jdbcType=VARCHAR},cmt_content),
 		cmt_del_check=nvl(#{cmt_del_check,jdbcType=VARCHAR},cmt_del_check),
 		mem_id=nvl(#{mem_id,jdbcType=VARCHAR},mem_id)

@@ -2,22 +2,23 @@ package practice.comment.model;
 
 public class commentVo {
 	private String cmt_no;
-	private String board_no;
+	private String bulletin_no;
 	private String reg_dt;
 	private String cmt_del_check;
 	private String cmt_content;
 	private String mem_id;
+	
+	public String getBulletin_no() {
+		return bulletin_no;
+	}
+	public void setBulletin_no(String bulletin_no) {
+		this.bulletin_no = bulletin_no;
+	}
 	public String getCmt_no() {
 		return cmt_no;
 	}
 	public void setCmt_no(String cmt_no) {
 		this.cmt_no = cmt_no;
-	}
-	public String getBoard_no() {
-		return board_no;
-	}
-	public void setBoard_no(String board_no) {
-		this.board_no = board_no;
 	}
 	public String getReg_dt() {
 		return reg_dt;
@@ -45,7 +46,7 @@ public class commentVo {
 	}
 	@Override
 	public String toString() {
-		return "commentVo [cmt_no=" + cmt_no + ", board_no=" + board_no
+		return "commentVo [cmt_no=" + cmt_no + ", board_no=" + bulletin_no
 				+ ", reg_dt=" + reg_dt + ", cmt_del_check=" + cmt_del_check
 				+ ", cmt_content=" + cmt_content + ", mem_id=" + mem_id + "]";
 	}

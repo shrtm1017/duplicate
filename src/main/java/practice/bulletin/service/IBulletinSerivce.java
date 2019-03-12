@@ -21,7 +21,7 @@ public interface IBulletinSerivce {
 
 	bulletinVo selectBulletin(String selectBulletin);
 
-	List<bulletinVo> bulletinReply(String selectBulletin);
+	public Map<String,Object> bulletinReply(pageVo pagevo);
 	
 	int bulletinCnt ();
 }

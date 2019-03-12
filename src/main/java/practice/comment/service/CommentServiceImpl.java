@@ -2,46 +2,34 @@ package practice.comment.service;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
+import javax.annotation.Resource;
 
-import practice.comment.dao.CommentDaoImpl;
+import org.springframework.stereotype.Service;
+
 import practice.comment.dao.ICommentDao;
 import practice.comment.model.commentVo;
-import practice.db.mybatis.MybatisSqlSessionFactoy;
-
+@Service("commentService")
 public class CommentServiceImpl implements ICommentService{
-	private ICommentDao CmtDao;
+@Resource(name="commentDao")
+private ICommentDao commentDao;
 	public CommentServiceImpl(){
-		CmtDao = new CommentDaoImpl();
 }
 
 	@Override
 	public List<commentVo> commentAll(String bullentin_no) {
-		SqlSessionFactory sessionFactory = MybatisSqlSessionFactoy.getSqlSessionFactory();
-		SqlSession sqlSession = sessionFactory.openSession();
-		List<commentVo> commentAll=CmtDao.getCommentAll(sqlSession,bullentin_no);
-		sqlSession.close();
+		List<commentVo> commentAll=commentDao.getCommentAll(bullentin_no);
 		return commentAll;
 	}
 
 	@Override
 	public int insertComment(commentVo vo) {
-		SqlSessionFactory sessionFactory = MybatisSqlSessionFactoy.getSqlSessionFactory();
-		SqlSession sqlSession = sessionFactory.openSession();
-		int commentVo= CmtDao.insertComment(sqlSession, vo);
-		sqlSession.commit();
-		sqlSession.close();
+		int commentVo= commentDao.insertComment(vo);
 		return commentVo;
 	}
 
 	@Override
 	public int deleteComment(commentVo vo) {
-		SqlSessionFactory sessionFactory = MybatisSqlSessionFactoy.getSqlSessionFactory();
-		SqlSession sqlSession = sessionFactory.openSession();
-		int commentVo= CmtDao.deleteComment(sqlSession, vo);
-		sqlSession.commit();
-		sqlSession.close();
+		int commentVo= commentDao.deleteComment( vo);
 		return commentVo;
 	}
 
